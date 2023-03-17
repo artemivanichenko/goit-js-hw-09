@@ -27,11 +27,18 @@ class Timer {
   }
 
   start() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       const ms = selectedDate - Date.now();
       const time = convertMs(ms);
       this.onTick(time);
+      if (ms < 1000) {
+        this.stop();
+      }
     }, 1000);
+  }
+  stop() {
+    clearInterval(this.interval);
+    refs.selectedDate.removeAttribute('disabled');
   }
 }
 
